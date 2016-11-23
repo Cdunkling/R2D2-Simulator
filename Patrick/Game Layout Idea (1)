@@ -1,0 +1,82 @@
+import random, pygame, sys
+from pygame.locals import *
+
+pygame.init() #initialises
+#############################
+
+
+WINDOWWIDTH = 500 #dimensions of the game, can change
+WINDOWHEIGHT = 460 # dimensions of the game, can change
+CELLSIZE = 20 #Size of a cell in the 'grid', can change
+assert WINDOWWIDTH % CELLSIZE == 0 # make sure cells can fit within dimensions
+assert WINDOWWIDTH % CELLSIZE == 0 #make sure cells can fit within dimensions
+CELLWIDTH = int(WINDOWWIDTH / CELLSIZE) #cell dimensions
+CELLHEIGHT = int(WINDOWHEIGHT / CELLSIZE) #cell dimensions
+
+FPS = 15 #Frames per second(game speed), could change with user inputted settings
+FPSCLOCK = pygame.time.Clock()
+DISPLAYSURF = pygame.display.set_mode((WINDOWWIDTH, WINDOWHEIGHT))
+FONT1 = pygame.font.Font('freesansbold.ttf', 18)
+pygame.display.set_caption("Robot Killer Simulator 2016")
+
+
+#             R    G    B
+WHITE     = (255, 255, 255)
+BLACK     = (  0,   0,   0)
+RED       = (255,   0,   0)
+DARKRED   = (155,   0,   0)
+GREEN     = (  0, 255,   0)
+DARKGREEN = (  0, 155,   0)
+BLUE      = (  0,   0, 255)
+DARKBLUE  = (  0,   0, 155)
+DARKGRAY  = ( 40,  40,  40)
+BGCOLOUR = WHITE
+
+#main game loop:
+def main():
+    while True:
+        RunGame()
+
+def RunGame():
+    startx = random.randint(3, CELLWIDTH - 2) # Starting x coord, not too close to edge
+    starty = random.randint(3, CELLHEIGHT - 2) # Starting y coord, not too close to edge
+    RobotCoords = [{'x': startx,     'y': starty}] #Starting Position
+    while True:
+
+        for event in pygame.event.get():
+            if event.type == QUIT:
+                EndSession() #Ends upon "QUIT"
+
+        DISPLAYSURF.fill(BGCOLOUR) #fills background colour as white
+        InitialiseGrid() # Creates grid
+        DrawRobot(RobotCoords)
+        pygame.display.update()
+        FPSCLOCK.tick(FPS)
+
+
+
+
+def InitialiseGrid(): #Draws the grid, 20 pixels by 20 pixels(CELLSIZE is 20)
+    for x in range(0, WINDOWWIDTH, CELLSIZE):
+        pygame.draw.line(DISPLAYSURF, DARKGRAY, (x, 0), (x, WINDOWHEIGHT))
+    for y in range(0, WINDOWHEIGHT, CELLSIZE):
+        pygame.draw.line(DISPLAYSURF, DARKGRAY, (0, y), (WINDOWWIDTH, y))
+
+
+def EndSession(): #function for ending the session upon 'QUIT'
+    pygame.quit() #closes pygame first
+    sys.exit() #close the system
+
+def DrawRobot(RobotCoords): #The Robot's position and body
+    for coords in RobotCoords:
+        x = coords['x'] * CELLSIZE # fills the cell
+        y = coords['y'] * CELLSIZE # fills the cell
+        RobotBodyRect = pygame.Rect(x, y, CELLSIZE, CELLSIZE) #fills the entire cell
+        pygame.draw.rect(DISPLAYSURF, DARKBLUE, RobotBodyRect)
+        RobotInnerBodyRect = pygame.Rect(x + 4, y + 4, CELLSIZE - 8, CELLSIZE - 8) # inner body cell therefore smaller.
+        pygame.draw.rect(DISPLAYSURF, BLUE, RobotInnerBodyRect)
+
+
+
+main() #runs the program
+

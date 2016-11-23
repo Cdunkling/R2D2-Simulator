@@ -1,0 +1,6 @@
+enemy,enemy,enemy,enemy,enemy,enemy,enemy,enemy,enemy,enemy
+enemy,enemy,enemy,enemy,enemy,enemy,enemy,enemy,enemy,enemy
+penemy,penemy,enemy,enemy,penemy,penemy,enemy,enemy,penemy,enemy
+penemy,penemy,enemy,enemy,penemy,penemy,enemy,enemy,penemy,renemy
+renemy,penemy,penemy,enemy,penemy,enemy,enemy,enemy,penemy,penemy
+penemy,penemy,penemy,penemy,penemy,penemy,penemy,penemy,penemy,penemy

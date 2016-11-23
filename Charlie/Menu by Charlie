@@ -1,0 +1,103 @@
+import pygame
+
+pygame.init()
+
+#setting colours
+WHITE = (255, 255, 255)
+BLACK = (0, 0, 0)
+GREEN = (0, 150, 0)
+RED = (150, 0, 0)
+BLUE = (0, 0, 150)
+BRIGHT_RED = (255, 0, 0)
+BRIGHT_GREEN = (0, 255, 0)
+BRIGHT_BLUE = (0, 0, 255)
+
+size = (700, 500)
+screen = pygame.display.set_mode(size)
+clock = pygame.time.Clock()
+
+pygame.display.set_caption("Menu")
+
+def game_intro():
+
+    #default game stats
+    wavemax = 20
+
+    
+    intro = True
+    while intro:
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                #closes program
+                pygame.quit()
+                quit()
+
+        #prints to screen
+        screen.fill(WHITE)
+        font = pygame.font.SysFont('Calibri', 25, True, False)
+        textTitle = font.render("Placeholder Title", True, BLACK)
+        textWave = font.render("Number of waves: " + str(wavemax), True, BLACK)
+        textWaveup = font.render("+", True, BLACK)
+        textWavedown = font.render("-", True, BLACK)
+        textStart = font.render("Start", True, BLACK)
+        screen.blit(textTitle, [275, 150])
+        screen.blit(textWave, [250, 250])
+        mouse = pygame.mouse.get_pos()
+        if 200+100 > mouse[0] > 200 and 300+50 > mouse[1] > 300:
+            #When mouse hovers over red button
+            pygame.draw.rect(screen, BRIGHT_RED, (200, 300, 100, 50))
+            pygame.draw.rect(screen, GREEN, (400, 300, 100, 50))
+            pygame.draw.rect(screen, BLUE, (300, 400, 100, 50))
+            if event.type == pygame.MOUSEBUTTONDOWN:
+                #Reduces number of waves
+                wavemax = wavemax-1
+                if wavemax <= 0:
+                    wavemax = 0
+        elif 400+100 > mouse[0] > 400 and 300+50 > mouse[1] > 300:
+            #when mouse hovers over green button
+            pygame.draw.rect(screen, RED, (200, 300, 100, 50))
+            pygame.draw.rect(screen, BRIGHT_GREEN, (400, 300, 100, 50))
+            pygame.draw.rect(screen, BLUE, (300, 400, 100, 50))
+            if event.type == pygame.MOUSEBUTTONDOWN:
+                #Increases number of waves
+                wavemax = wavemax+1
+        elif 300+100 > mouse[0] > 300 and 400+50 > mouse[1] > 400:
+            #when mouse hovers over blue button
+            pygame.draw.rect(screen, RED, (200, 300, 100, 50))
+            pygame.draw.rect(screen, GREEN, (400, 300, 100, 50))
+            pygame.draw.rect(screen, BRIGHT_BLUE, (300, 400, 100, 50))
+            if event.type == pygame.MOUSEBUTTONDOWN:
+                #Begins main game loop
+                game_loop(wavemax)
+                intro = False
+                break
+        else:
+            pygame.draw.rect(screen, RED, (200, 300, 100, 50))
+            pygame.draw.rect(screen, GREEN, (400, 300, 100, 50))
+            pygame.draw.rect(screen, BLUE, (300, 400, 100, 50))
+        screen.blit(textWavedown, [245, 315])
+        screen.blit(textWaveup, [445, 315])
+        screen.blit(textStart, [ 325, 415])
+        pygame.display.flip()
+        clock.tick(30)
+
+
+def game_loop(wavemax):
+    hp = 150
+    currentwave = 1
+    while currentwave <= wavemax:
+        #For testing purposes only
+        screen.fill(WHITE)
+        font = pygame.font.SysFont('Calibri', 25, True, False)
+        texthp = font.render("HP: " + str(hp), True, BLACK)
+        textwaves = font.render("Wave " + str(currentwave) + "/" + str(wavemax), True, BLACK)
+        screen.blit(texthp, [350, 250])
+        screen.blit(textwaves, [350, 275])
+        pygame.display.flip()
+        hp = hp
+        currentwave = currentwave +1
+        clock.tick(30)
+    
+        
+game_intro()
+pygame.quit()
