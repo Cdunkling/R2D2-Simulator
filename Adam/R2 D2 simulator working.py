@@ -91,7 +91,8 @@ def gameLoop():
             if event.type == pygame.QUIT:
                 gameOver = True
             if event.type == pygame.KEYDOWN:
-                gameOver = True
+                if event.key == pygame.K_ESCAPE:
+                    gameOver = True
 
         screen.fill(BLACK)
         for asteroid1 in objectsleft:
